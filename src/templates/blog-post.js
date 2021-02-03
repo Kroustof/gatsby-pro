@@ -1,9 +1,20 @@
 import React from "react"
 import { Link, graphql } from "gatsby"
+import Img from "gatsby-image"
+
+import RehypeReact from 'rehype-react'
 
 import Bio from "../components/bio"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
+import MailchimpForm from "../components/mailchimpForm"
+
+
+const renderAst = new RehypeReact({
+  createElement: React.createElement,
+  components: {'bio': Bio}
+}).Compiler
+
 
 const BlogPostTemplate = ({ data, location }) => {
   const post = data.markdownRemark
@@ -22,14 +33,17 @@ const BlogPostTemplate = ({ data, location }) => {
         itemType="http://schema.org/Article"
       >
         <header>
+          <Img fluid={post.frontmatter.image.childImageSharp.fluid} alt={post.title} />
           <h1 itemProp="headline">{post.frontmatter.title}</h1>
           <p>{post.frontmatter.date}</p>
         </header>
-        <section
+        {/* <section
           dangerouslySetInnerHTML={{ __html: post.html }}
           itemProp="articleBody"
-        />
+        /> */}
+        <div>{renderAst(post.htmlAst)}</div>
         <hr />
+        <MailchimpForm />
         <footer>
           <Bio />
         </footer>
@@ -81,10 +95,18 @@ export const pageQuery = graphql`
       id
       excerpt(pruneLength: 160)
       html
+      htmlAst
       frontmatter {
         title
         date(formatString: "MMMM DD, YYYY")
         description
+        image {
+          childImageSharp {
+            fluid(maxWidth: 630) {
+              ...GatsbyImageSharpFluid_withWebp
+            }
+          }
+        }
       }
     }
     previous: markdownRemark(id: { eq: $previousPostId }) {

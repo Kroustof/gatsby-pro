@@ -31,10 +31,33 @@ module.exports = {
       options: {
         plugins: [
           {
+            resolve: `@raae/gatsby-remark-oembed`,
+            options: {
+              // usePrefix defaults to false
+              // usePrefix: true is the same as ["oembed"]
+              // usePrefix: true,
+              // usePrefix: ["oembed", "video"],
+              providers: {
+                // Important to exclude providers
+                // that adds js to the page.
+                // If you do not need them.
+                include: ['Twitter', 'YouTube'],
+                // exclude: ["Reddit"]
+              }
+            }
+          },
+          {
             resolve: `gatsby-remark-images`,
             options: {
               maxWidth: 630,
             },
+          },
+          {
+            resolve: "gatsby-remark-external-links",
+            options: {
+              target: "_blank",
+              rel: "nofollow"
+            }
           },
           {
             resolve: `gatsby-remark-responsive-iframe`,
@@ -42,8 +65,10 @@ module.exports = {
               wrapperStyle: `margin-bottom: 1.0725rem`,
             },
           },
+          "gatsby-remark-component",
           `gatsby-remark-prismjs`,
           `gatsby-remark-copy-linked-files`,
+          `gatsby-plugin-catch-links`,
           `gatsby-remark-smartypants`,
         ],
       },
