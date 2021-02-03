@@ -8,8 +8,8 @@ const MailchimpForm = () => {
           Your Email: <input type="email" name="email" />
         </label>
       </p>
-      <input type="hidden" form-name="form-name" value="contact"/>
-      <input type="hidden" form-name="bot-field"/>
+      <input type="hidden" name="form-name" value="contact"/>
+      <input type="hidden" name="bot-field"/>
       <p>
         <button type="submit">Send</button>
       </p>
