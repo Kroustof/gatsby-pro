@@ -2,7 +2,7 @@ import React from "react"
 
 const MailchimpForm = () => {
   return (
-    <form name="mailchimp" method="POST" data-netlify="true" netlify-honeypot='bot-field'>
+    <form form-name="mailchimp" method="POST" data-netlify="true" netlify-honeypot='bot-field'>
       <p>
         <label>
           Your Email: <input type="email" name="email" />
